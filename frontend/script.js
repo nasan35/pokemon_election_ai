@@ -1,5 +1,5 @@
 // 🌟 サーバーのURL（ローカル開発用）
-const API_BASE_URL = "https://pokemon-election-ai.onrender.com";
+const API_BASE_URL = "https://pokemon-election-ai.onrender.com/api";
 
 let POKE_MASTER = [];
 let myParty = [];
