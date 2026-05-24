@@ -1,0 +1,480 @@
+:root {
+    --primary-red: #FF4B4B;
+    --primary-blue: #1C83E1;
+    --bg-light: #f8f9fa;
+}
+
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+    color: #31333F;
+}
+
+header {
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+h1 { font-size: 24px; font-weight: 800; margin: 0; white-space: nowrap; }
+
+#help-btn {
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: bold;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: white;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+#help-btn:hover { background-color: #f0f2f6; }
+
+.ad-space {
+    width: 100%;
+    height: 90px;
+    background: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0;
+    font-size: 12px;
+    color: #999;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    padding: 0 20px;
+}
+
+.party-section { display: flex; flex-direction: column; }
+.button-group { display: flex; gap: 8px; margin-bottom: 10px; }
+
+.sub-btn {
+    flex: 1;
+    padding: 8px;
+    font-size: 12px;
+    font-weight: bold;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: white;
+    cursor: pointer;
+}
+.sub-btn:hover { background-color: #f8f9fa; }
+
+.search-wrapper { position: relative; }
+
+input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid rgba(49,51,63,0.2);
+    border-radius: 8px;
+    background-color: #f0f2f6;
+    box-sizing: border-box;
+}
+
+.dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    max-height: 250px;
+    overflow-y: auto;
+    z-index: 100;
+    display: none;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.dropdown-item { padding: 10px; cursor: pointer; }
+.dropdown-item:hover { background: #f0f2f6; }
+
+.poke-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.slot {
+    aspect-ratio: 1/1;
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.slot img { width: 80%; object-fit: contain; }
+
+.remove-btn {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background-color: #FF4B4B;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    padding: 0;
+    line-height: 1;
+}
+
+.remove-btn:hover { background-color: #e03e3e; }
+
+/* 🌟 ここからモーダル用のCSS */
+.modal-overlay {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5); z-index: 1000;
+}
+
+.modal {
+    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    background: white; padding: 20px; border-radius: 12px;
+    z-index: 1001; width: 90%; max-width: 400px;
+    max-height: 80vh; overflow-y: auto;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.modal h3 { margin-top: 0; border-bottom: 2px solid #f0f2f6; padding-bottom: 10px; }
+
+.modal-close {
+    position: absolute; top: 15px; right: 15px; border: none;
+    background: transparent; font-size: 20px; font-weight: bold;
+    color: #999; cursor: pointer; padding: 0; line-height: 1;
+}
+.modal-close:hover { color: #333; }
+
+.saved-team-row { margin-bottom: 20px; }
+.saved-team-grid {
+    display: grid; grid-template-columns: repeat(6, 1fr); gap: 5px;
+    margin-bottom: 8px;
+}
+.saved-team-grid img {
+    width: 100%; aspect-ratio: 1/1; object-fit: contain;
+    border: 1px solid #ddd; border-radius: 4px; background: #fafafa;
+}
+
+/* 📱 スマホ対応 */
+@media (max-width: 768px) {
+    .container { grid-template-columns: 1fr; }
+    .hide-on-mobile { display: none !important; }
+    header { margin-top: 5px; padding: 10px 15px; }
+    h1 { font-size: 19px; }
+    #help-btn { font-size: 12px; padding: 6px 10px; }
+}
+
+/* 🌟 AI予想テーブルとプログレスバーのデザイン */
+.prediction-container {
+    margin-top: 30px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.prediction-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    background: white;
+}
+
+.prediction-table th {
+    background-color: #f0f2f6;
+    padding: 10px;
+    text-align: left;
+    border-bottom: 2px solid #ddd;
+}
+
+.prediction-table td {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+}
+
+.progress-container {
+    background-color: #eee;
+    border-radius: 5px;
+    width: 100%;
+    height: 10px;
+    position: relative;
+    margin-top: 4px;
+}
+
+.progress-fill-lead { background-color: #FF4B4B; height: 100%; border-radius: 5px; transition: width 0.5s ease; }
+.progress-fill-all { background-color: #1C83E1; height: 100%; border-radius: 5px; transition: width 0.5s ease; }
+
+/* 🌟 タイプタグの基本デザイン（バッジ風） */
+.type-tag {
+    display: inline-block;
+    padding: 4px 10px;
+    margin: 2px 4px 4px 0;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.3); /* 文字をくっきりさせる */
+    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+/* 🌟 各タイプの専用カラー設定 */
+.type-ノーマル { background-color: #A8A878; }
+.type-ほのお { background-color: #F08030; }
+.type-みず { background-color: #6890F0; }
+.type-でんき { background-color: #F8D030; }
+.type-くさ { background-color: #78C850; }
+.type-こおり { background-color: #98D8D8; }
+.type-かくとう { background-color: #C03028; }
+.type-どく { background-color: #A040A0; }
+.type-じめん { background-color: #E0C068; }
+.type-ひこう { background-color: #A890F0; }
+.type-エスパー { background-color: #F85888; }
+.type-むし { background-color: #A8B820; }
+.type-いわ { background-color: #B8A038; }
+.type-ゴースト { background-color: #705898; }
+.type-ドラゴン { background-color: #7038F8; }
+.type-あく { background-color: #705848; }
+.type-はがね { background-color: #B8B8D0; }
+.type-フェアリー { background-color: #EE99AC; }
+
+/* 一貫性チェックの枠自体のデザイン調整 */
+.consistency-box {
+    background-color: #fcfcfc;
+    border-left: 4px solid #F8D030;
+    padding: 15px;
+    border-radius: 0 8px 8px 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* 🌟 記録エリアのデザイン */
+.record-container {
+    padding: 20px;
+    background: #fff;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+.record-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 15px;
+}
+.record-box {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #eee;
+}
+.select-label { font-size: 12px; font-weight: bold; margin: 10px 0 5px 0; color: #555; }
+select { width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ccc; font-size: 14px; }
+.checkbox-group { display: flex; flex-direction: column; gap: 6px; font-size: 14px; }
+.submit-btn {
+    display: block; width: 100%; padding: 12px; margin-top: 20px;
+    background-color: #1C83E1; color: white; font-size: 15px;
+    font-weight: bold; border: none; border-radius: 8px; cursor: pointer;
+    box-shadow: 0 2px 4px rgba(28,131,225,0.3);
+}
+.submit-btn:hover { background-color: #1565c0; }
+@media (max-width: 768px) { .record-grid { grid-template-columns: 1fr; } }
+
+/* 🌟 アイコンクリック方式のUIデザイン */
+.record-icon-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-top: 10px;
+}
+.record-icon {
+    aspect-ratio: 1/1;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+.record-icon img { width: 80%; object-fit: contain; pointer-events: none; }
+.record-icon:hover { border-color: #999; }
+
+/* 選択された時のデザイン */
+.record-icon[data-order="1"] { border-color: #FF4B4B; background: #fff0f0; } /* 先発 */
+.record-icon[data-order="2"], .record-icon[data-order="3"] { border-color: #1C83E1; background: #f0f8ff; } /* 後発 */
+
+/* 先発・後発のバッジ */
+.order-badge {
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.record-icon[data-order="1"] .order-badge { background-color: #FF4B4B; }
+.record-icon[data-order="2"] .order-badge,
+.record-icon[data-order="3"] .order-badge { background-color: #1C83E1; }
+
+.selection-status {
+    margin-top: 12px;
+    font-size: 13px;
+    line-height: 1.6;
+    padding: 8px;
+    background: white;
+    border-radius: 6px;
+    border: 1px dashed #ccc;
+}
+
+.tab-menu {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    background: #f0f2f6;
+    border-bottom: 1px solid #ddd;
+}
+.tab-btn {
+    padding: 10px 20px;
+    border: none;
+    background: none;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 20px;
+    color: #666;
+}
+.tab-btn.active {
+    background: #1C83E1;
+    color: white;
+}
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* 🌟 タブメニュー */
+.tab-menu {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    padding: 10px;
+    background: #f0f2f6;
+    border-bottom: 1px solid #ddd;
+}
+.tab-btn {
+    padding: 8px 16px;
+    border: none;
+    background: white;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 20px;
+    color: #666;
+    font-size: 14px;
+    border: 1px solid #ddd;
+}
+.tab-btn.active {
+    background: #1C83E1;
+    color: white;
+    border-color: #1C83E1;
+}
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* 🌟 診断画面 */
+.diagnosis-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+.diag-team-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 15px;
+}
+.diag-team-item {
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.diag-team-item:hover { background: #f0f8ff; border-color: #1C83E1; }
+.diag-row { display: flex; gap: 5px; margin-top: 8px; }
+.diag-row img { width: 40px; height: 40px; background: #f9f9f9; border-radius: 4px; }
+
+.ranking-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+.ranking-num { font-weight: bold; color: #1C83E1; font-size: 18px; width: 25px; }
+
+#diag-party-grid {
+    display: grid;
+    gap: 8px;
+    justify-content: center;
+    margin: 15px auto;
+}
+
+@media (min-width: 768px) {
+    #diag-party-grid {
+        grid-template-columns: repeat(6, 60px); /* PC画面：横に6匹並べる */
+    }
+}
+@media (max-width: 767px) {
+    #diag-party-grid {
+        grid-template-columns: repeat(3, 60px); /* スマホ画面：3列×2行 */
+    }
+}
+
+#diag-party-grid .slot { width: 60px; height: 60px; background-color: #ffffff; border: 1px solid #ddd; border-radius: 8px; }
+#diag-party-grid .slot img { width: 50px; height: 50px; }
+
+/* 診断用の検索窓の幅を調整 */
+.diag-manual-input {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* 診断ボタンを少しスリムに */
+#run-manual-diag-btn {
+    max-width: 300px;
+    margin: 15px auto;
+}
+
+/* 🌟 モーダル内のパーティ名が長すぎる場合のレイアウト崩れ防止 */
+.saved-team-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 14px;
+    white-space: nowrap;      /* 改行させない */
+    overflow: hidden;         /* はみ出た部分は隠す */
+    text-overflow: ellipsis;  /* はみ出たら「...」にする */
+    max-width: 100%;          /* 親要素の幅を超えないようにする */
+}

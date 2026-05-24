@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ポケモン選出予想AI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <h1>⚡ ポケモン選出予想AI</h1>
+        <button id="help-btn">📖 使い方</button>
+    </header>
+
+    <nav class="tab-menu">
+        <button class="tab-btn active" onclick="switchTab('predict')">⚔️ 選出予想</button>
+        <button class="tab-btn" onclick="switchTab('diagnosis')">📊 パーティ診断</button>
+    </nav>
+
+    <div class="ad-space">ここに広告を配置</div>
+
+    <div id="tab-predict" class="tab-content active">
+        <main class="container">
+            <section class="party-section" id="my-section">
+                <h3 class="blue-title">🟦 自分のパーティ</h3>
+                <div class="button-group">
+                    <button class="sub-btn" onclick="openTeamModal('my')">📂 パーティ呼出</button>
+                    <button class="sub-btn" onclick="saveTeam('my')">💾 パーティ保存</button>
+                </div>
+                <div class="search-wrapper">
+                    <input type="text" id="my-search" placeholder="自分のポケモンを検索...">
+                    <div id="my-dropdown" class="dropdown"></div>
+                </div>
+                <div class="poke-grid" id="my-party-grid"></div>
+            </section>
+
+            <section class="party-section" id="opp-section">
+                <h3 class="red-title">🟥 相手のパーティ</h3>
+                <div class="button-group hide-on-mobile" style="visibility: hidden;">
+                    <button class="sub-btn">ダミー</button>
+                </div>
+                <div class="search-wrapper">
+                    <input type="text" id="opp-search" placeholder="相手のポケモンを検索...">
+                    <div id="opp-dropdown" class="dropdown"></div>
+                </div>
+                <div class="poke-grid" id="opp-party-grid"></div>
+            </section>
+        </main>
+
+        <div id="type-consistency-container" class="consistency-box"
+            style="display:none; margin: 20px; box-sizing: border-box;"></div>
+
+        <div id="ai-prediction" class="prediction-container" style="display:none; margin: 0 20px 20px 20px;">
+            <h3>🤖 AI選出予想</h3>
+            <table class="prediction-table">
+                <thead>
+                    <tr>
+                        <th>ポケモン</th>
+                        <th>先発予想</th>
+                        <th>全体選出予想</th>
+                    </tr>
+                </thead>
+                <tbody id="prediction-body"></tbody>
+            </table>
+        </div>
+
+        <div id="record-section" class="record-container" style="display:none; margin: 0 20px 20px 20px;">
+            <h3 style="margin-top: 0;">🏁 対戦結果を記録してAIを育てる</h3>
+            <p style="font-size: 12px; color: #666;">ポケモンのアイコンを「先発」→「後発」の順にクリックして選んでください（最大3匹まで）。</p>
+            <div class="record-grid">
+                <div class="record-box">
+                    <h4 class="blue-title" style="margin-top:0;">🟦 あなたの選出</h4>
+                    <div id="my-record-icons" class="record-icon-grid"></div>
+                    <div class="selection-status" id="my-selection-status">先発: 未選択<br>後発: -</div>
+                </div>
+                <div class="record-box">
+                    <h4 class="red-title" style="margin-top:0;">🟥 相手の選出</h4>
+                    <div id="opp-record-icons" class="record-icon-grid"></div>
+                    <div class="selection-status" id="opp-selection-status">先発: 未選択<br>後発: -</div>
+                </div>
+            </div>
+            <button id="submit-record-btn" class="submit-btn">📈 結果を送信してAIを学習させる</button>
+        </div>
+    </div>
+
+    <div id="tab-diagnosis" class="tab-content" style="margin: 20px;">
+        <div class="diagnosis-card">
+            <h3>📊 パーティ診断（選出傾向分析）</h3>
+            <p style="font-size: 13px; color: #666; margin-bottom: 20px;">
+                分析したいポケモンを3匹以上選んでください。過去のデータから<b>「相手に選出されやすいポケモン」</b>を即座に特定します。
+            </p>
+
+            <div class="diag-manual-input">
+                <div class="button-group" style="margin-bottom: 10px;">
+                    <button class="sub-btn" onclick="openTeamModal('diag')">📂 パーティ呼出</button>
+                    <button class="sub-btn" onclick="saveTeam('diag')">💾 パーティ保存</button>
+                </div>
+
+                <div class="search-wrapper">
+                    <input type="text" id="diag-search" placeholder="診断するポケモンを検索・追加...">
+                    <div id="diag-dropdown" class="dropdown"></div>
+                </div>
+                <div class="poke-grid" id="diag-party-grid"></div>
+            </div>
+
+            <div id="diagnosis-result-area" style="margin-top: 30px; display: none;">
+                <h4 style="border-bottom: 2px solid #FF4B4B; padding-bottom: 5px;">⚠️ 選出されやすいポケモン</h4>
+                <div id="diagnosis-ranking"></div>
+
+                <h4 style="border-bottom: 2px solid #1C83E1; padding-bottom: 5px; margin-top: 30px;">🛡️ 選出されやすいタイプ</h4>
+                <div id="diagnosis-types" class="type-result-grid"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ad-space">ここに広告を配置</div>
+
+    <div id="modal-overlay" class="modal-overlay" style="display: none;"></div>
+
+    <div id="help-modal" class="modal" style="display: none;">
+        <button class="modal-close" onclick="closeModals()">✕</button>
+        <h3>📖 使い方ガイド</h3>
+        <ul>
+            <li><strong>⚔️ 選出予想:</strong> 対戦中、相手の6体から選出を予測します。</li>
+            <li><strong>📊 パーティ診断:</strong> 自分のパーティが「何を誘うか」を分析します。</li>
+        </ul>
+    </div>
+
+    <div id="team-modal" class="modal" style="display: none;">
+        <button class="modal-close" onclick="closeModals()">✕</button>
+        <h3>📂 マイパーティ管理</h3>
+        <div id="saved-teams-container"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
